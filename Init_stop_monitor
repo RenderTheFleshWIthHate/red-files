@@ -1,0 +1,21 @@
+#!/bin/bash
+
+read option
+
+
+if [ "$option" == "start" ]; then
+        airmon-ng start wlan0
+        airmon-ng check kill
+        ifconfig wlan0mon down
+        macchanger -r wlan0mon
+        ifconfig wlan0mon up                                                                              
+elif [ "$option" == "stop" ]; then                                                                        
+        airmon-ng stop wlan0mon                                                                           
+        ifconfig wlan0 down                                                                               
+        macchanger -p wlan0
+        ifconfig wlan0 up
+        service network-manager start
+        iwconfig
+else 
+        echo "Optiunea '$option' nu exista."
+fi
